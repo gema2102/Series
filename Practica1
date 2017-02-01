@@ -1,0 +1,23 @@
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/regulares/enoe/microdatos/enoe_15ymas/2016/2016trim1_dbf.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("dbf",files)])
+install.packages("foreign")
+require(foreign)
+SDMT116 <- data.frame(read.dbf("sdemt116.dbf"))
+View (SDMT116)
+
+nombres <- c("sergio", "carlos", "paula")
+edad <- c(23, 43, 51)
+base1 <- data.frame(nombres, edad)
+View (base1)
+
+3+4
+
+table (SDMT116$SEX) #tabla para la variable sexo
+table (SDMT116$ENT) #tabla para la variable entidad
+
+install.packages("questionr") #bajamos de internet la libreria
+require (questionr) #mandamos llamar la librería a mi sesión de R
+
+wtd.table (SDMT116$SEX, weights = SDMT116$FAC)
