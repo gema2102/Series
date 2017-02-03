@@ -1,0 +1,40 @@
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/regulares/enoe/microdatos/enoe_15ymas/2016/2016trim1_dbf.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("dbf",files)])
+install.packages("foreign")
+require(foreign)
+SDEMT116 <- data.frame(read.dbf("sdemt116.dbf"))
+View (SDEMT116)
+
+table (SDEMT116$R_DEF) #tabla para la variable R_DEF
+table (SDEMT116$CLASE2)
+
+167881+6929+19579+114998
+
+install.packages("questionr") #bajamos de internet la libreria
+require (questionr) #mandamos llamar la librería a mi sesión de R
+
+wtd.table(SDEMT116$CLASE2, weights = SDEMT116$FAC) #DESEMPLEADOS EN MEXICO EN 2016 TRIM SEGUN LA ENOE
+
+
+table (SDEMT116$SEX) #tabla para la variable sexo
+table (SDEMT116$ENT) #tabla para la variable entidad
+
+wtd.table (SDEMT116$SEX, weights = SDEMT116$FAC)
+
+AGS16 <- subset(SDEMT116, SDEMT116$ENT == "01")
+table (SDEMT116$ENT)
+
+AGS16V1 <- subset(SDEMT116, SDEMT116$ENT == "01" | SDEMT116$ENT == "02")
+table (SDEMT116$ENT)
+  
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  
+  data ("AirPassengers")
+class (AirPassengers)
+start (AirPassengers) #Muestra cuando inicia la ST
+end (AirPassengers) #Muestra cuando termina la ST
+frequency (AirPassengers) #Muestra la frecuencia de la ST
+summary (AirPassengers) #Resumen de los datos de la ST
+plot (AirPassengers) #Grafica la ST
