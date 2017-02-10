@@ -1,0 +1,21 @@
+getwd()
+datos=read.csv(file="datos.csv", header=T, dec=".")
+datos
+
+Desocupado <- ts(datos[,1], frequency = 4, start = 2005)
+Ocupado <- ts(datos[,2], frequency = 4, start = 2005)
+Asalariado <- ts(datos[,3], frequency = 4, start = 2005)
+Condiciones <- ts(datos[,4], frequency = 4, start = 2005)
+plot (datos)
+
+
+##########################################################################
+
+practica<-tempfile()
+download.file("http://www3.inegi.org.mx/Sistemas/infoenoe/Default_15mas.aspx?s=est&c=27736.zip",practica)
+files=unzip(practica, list=TRUE)$Tasa.de.desocupacion
+unzip(practica, files=files[grepl("dbf",files)])
+install.packages("foreign")
+require(foreign)
+consulta<-data.frme(read.dbf("consulta.dbf"))
+view(consulta)
