@@ -1,0 +1,69 @@
+## Generar 4 objetos con datos aleatorios y que tengan 60 datos
+## Objeto 1: Número de profesionistas (millones)   Rango: 5 a 8
+## Objeto 2 Crecimiento PIB                        Rango: 0 a 5
+## Objeto 3 Porcentaje de ocupados                 Rango: 40 a 60
+## Objeto 4 Porcentaje de desocupados              Rango: 3 a 8
+
+profesionista <- sample(5:8, 60, replace=TRUE)
+pib <- sample(0:5, 60, replace=TRUE)
+ocupados <- sample(40:60, 60, replace=TRUE)
+desocupados <- sample(3:8,60, replace=TRUE)
+
+## 1) Una ves que se generado los datos, se hace un data frame con los 4 objetos
+
+base <- data.frame (profesionista, pib, ocupados, desocupados)
+
+## 2) Mostrar en pantalla los 12 primeros y ultimos datos
+
+base [1:12,] #primera entrada son filas, segunda es la columnna. Como no se puso 
+             #nada del segundo lado, entonces se toman en cuenta todas las columnas
+
+base [49:60,]
+
+## 3) Convertir los objetos en series de tiempo desde 
+      #el data frame comenzando en 2010 y siendo datos mensuales
+
+stprof <- ts(profesionista, frequency = 12, start = (2010))
+stpib <- ts(pib, frequency = 12, start = (2010))
+stocup <- ts(ocupados, frequency = 12, start = (2010))
+stdesocup <- ts(desocupados, frequency = 12, start = (2010))
+
+end (stprof)
+end(stpib)
+end(stocup)
+end(stdesocup)
+
+## 4) Graficar los profesionistas y los ocupados en la misma imagen
+
+plot(cbind(stprof, stocup))
+
+## 5) Graficar PIB y desocupados en la misma imagen
+
+plot(cbind(stpib, stdesocup))
+
+## 6) Graficas todas las series en la misma imagen
+
+plot(cbind(stprof, stpib, stocup, stdesocup))
+
+## Se hace una base con las series de tiempo
+
+base1 <- data.frame(stprof, stpib, stocup, stdesocup)
+
+## Se grafica la nueva base que incluye todas las ST
+
+plot.ts(base1[,c(1,3)]) 
+
+#Se convierte en serie de tiempo la base que contiene las 4 ST
+
+stbase1 <- ts.intersect(base)
+
+PIB <- data.frame(read.csv("C:\\Users\\SALA-D30\\Downloads\\PIB_Mexico.csv"))
+
+Serie1 <- ts(PIB[2:12,], frequency=1, start=(1980))
+Serie2 <- ts(PIB[13:22,], frequency=1, start=(1991))
+Serie3 <- ts(PIB[23:32,], frequency=1, start=(2001))
+Serie4 <- ts(PIB[33:37,], frequency=1, start=(2011))
+
+base <- data.frame(Serie1, Serie2, Serie3, Serie4)
+plot(cbind(Serie2, Serie3))
+plot(cbind(Serie1, Serie4))
