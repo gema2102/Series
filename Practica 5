@@ -1,0 +1,99 @@
+profesionista <- sample(5:8, 60, replace=TRUE)
+pib <- sample(0:5, 60, replace=TRUE)
+ocupados <- sample(40:60, 60, replace=TRUE)
+desocupados <- sample(3:8,60, replace=TRUE)
+
+## 1) Una ves que se generado los datos, se hace un data frame con los 4 objetos
+
+base <- data.frame (profesionista, pib, ocupados, desocupados)
+
+## 2) Mostrar en pantalla los 12 primeros y ultimos datos
+
+base [1:12,] #primera entrada son filas, segunda es la columnna. Como no se puso 
+#nada del segundo lado, entonces se toman en cuenta todas las columnas
+
+base [49:60,]
+
+## 3) Convertir los objetos en series de tiempo desde 
+#el data frame comenzando en 2010 y siendo datos mensuales
+
+stprof <- ts(profesionista, frequency = 12, start = (2000))
+stpib <- ts(pib, frequency = 12, start = (2000))
+stocup <- ts(ocupados, frequency = 12, start = (2000))
+stdesocup <- ts(desocupados, frequency = 12, start = (2000))
+
+end (stprof)
+end(stpib)
+end(stocup)
+end(stdesocup)
+
+## 4) Graficar los profesionistas y los ocupados en la misma imagen
+
+plot(cbind(stprof, stocup))
+
+## 5) Graficar PIB y desocupados en la misma imagen
+
+plot(cbind(stpib, stdesocup))
+
+## 6) Graficas todas las series en la misma imagen
+
+plot(cbind(stprof, stpib, stocup, stdesocup))
+
+## Se hace una base con las series de tiempo
+
+base1 <- data.frame(stprof, stpib, stocup, stdesocup)
+
+## Se grafica la nueva base que incluye todas las ST
+
+plot.ts(base1[,c(1,3)]) 
+
+#Se convierte en serie de tiempo la base que contiene las 4 ST
+
+stbase1 <- ts.intersect(base)
+
+
+seriemultiple<- ts.intersect(stprof, stpib, stocup, stdesocup) # serie de tiempo multiple con las 4 variables
+plot (seriemultiple, main="Serie de tiempo multiple", xlab="Años", ylab="Numero de personas", col="purple", type="overplotted", pch=2) # Grafica serie de tiempo multiple
+
+seriemultiple02.07<-window(seriemultiple, start=c(2000,1), end=c(2002,1))
+seriemultiple07.12<-window(seriemultiple, start=c(2002,1), end=c(2004,1))
+
+plot(seriemultiple02.07, main="Serie de tiempo multiple", xlab="Años", ylab="Numero de personas", col="pink")
+plot(seriemultiple07.12, main="Serie de tiempo multiple", xlab="Años", ylab="Numero de personas", col="red")
+
+###################################################################################################################
+
+# Obtener 4 series de tiempo cada quien elige con minimo 30 datos
+##Las series de tiempo que importen tinene que tener sustento para compararlas
+## Importarlas, declararlas series de tiempo, graficarlas juntas como ST cada una
+## Crear serie de tiempo ultiple y graficarlas con fromato
+##Dividir estas ST en 3 periodos con intervalos iguales, es decir, si tienen 30 datos, generar 3 ST con 10 años cada una
+
+precios <- data.frame(read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Precios.csv"))
+kimber <- ts(precios[,1], frequency = 365, start = 2014)
+liverpool <- ts(precios[,2], frequency = 365, start = 2014)
+soriana <- ts(precios[,3], frequency = 365, start = 2014)
+aero <- ts(precios[,4], frequency = 365, start = 2014)
+
+end(kimber)
+end(liverpool)
+end(soriana)
+end(aero)
+
+plot(kimber)
+plot(liverpool)
+plot(soriana)
+plot(aero)
+
+stprecios <- data.frame(kimber, liverpool, soriana, aero)
+
+plot.ts(stprecios)
+
+seriemultipleprecios<- ts.intersect(kimber, liverpool, soriana, aero)
+plot (seriemultipleprecios, main="Serie de tiempo multiple", xlab="Dias", ylab="Pesos", col="purple", type="overplotted", pch=20)
+
+seriemultiple1<-window(seriemultipleprecios, start=c(2014,1), end=c(2015,1))
+seriemultiple2<-window(seriemultipleprecios, start=c(2015,1), end=c(2016,1))
+
+plot(seriemultiple1, main="Serie de tiempo multiple", xlab="Dias", ylab="Pesos", col="green", type="overplotted", pch=20)
+plot(seriemultiple2, main="Serie de tiempo multiple", xlab="Dias", ylab="Pesos", col="blue", type="overplotted", pch=20)
