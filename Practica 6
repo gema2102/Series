@@ -1,0 +1,37 @@
+TIIE <- data.frame(read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\TIIE2015.csv"))
+STTIIE <- ts(TIIE, frequency = 52, start = 2015)
+plot (STTIIE)
+plot(decompose(STTIIE))
+
+PIBMEXICO <- data.frame(read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\PIB México.csv"))
+STPIB <- ts(PIBMEXICO, frequency = 4, start = 2007)
+plot (STPIB)
+plot(decompose(STPIB))
+View(STPIB)
+summary(STPIB)
+DESTPIB<-decompose(STPIB)
+names(DESTPIB)
+DESTPIB$trend
+DESTPIB$seasonal
+
+#Ejercicio: Descomponer una serie de tiempo graficamente y mandar llamar cad auno de los componentes de la serie de tiempo
+        # Tasa de desocupacion, empieza en el año 2005 y es trimestral
+
+TASADESOC <- data.frame(read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Tasa_desocupacion.csv"))
+TASADESOCST <- ts(TASADESOC, frequency = 4, start = 2005)
+start(TASADESOCST)
+end(TASADESOCST)
+plot (TASADESOCST)
+plot(decompose(TASADESOCST))
+View(TASADESOCST)
+summary(TASADESOCST)
+DESTASADESOCST<-decompose(TASADESOCST)
+names(DESTASADESOCST)
+DESTASADESOCST$trend
+DESTASADESOCST$seasonal
+DESTASADESOCST$random
+
+#Analisis: Tasa de desocupacion en los años 2005-2016
+#La tasa de desempleo disminuyó en el 3er trimestre del 2016 y 
+#se mantuvo relativamente baja hasta el primer trimestre del 2009.Posteriormente 
+#la tasa se elevó, muy posiblemente a la crisis que se sucitó en el 2008.
