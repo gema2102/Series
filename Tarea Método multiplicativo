@@ -1,0 +1,11 @@
+remesas <- data.frame(read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Remesas.csv"))
+STremesas <- ts(remesas, frequency = 12, start = 2000)
+start(STremesas)
+end(STremesas)
+
+decSTremesas <- decompose (STremesas)
+decSTremesas$trend
+decSTremesas$seasonal
+plot(STremesas, col="green", main="Remesas mensuales en México", ylab="Millones de dólares", xlab="Meses")
+lines (decSTremesas$trend, col="blue", ylab="Tendencia")
+monthplot(decSTremesas$seasonal, main="IVE",ylab="IVE")
