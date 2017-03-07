@@ -1,0 +1,27 @@
+install.packages("fpp")
+require(fpp)
+plot(window(elec.start=1980), ylab="Gwh", xlab="Year", main="Australian electricity production")
+##Estacionariedad, tendencia y ciclico
+seasonplot(elec, s=12, year.labels=TRUE, main="Electricidad", ylab="Año", col=rainbow(20), year.labels.left=TRUE, pch=10)
+elec
+
+plot(bricksq, ylab="Million units", xlab="Year", main="Australian clay brick production")
+seasonplot(bricksq, s=12, year.labels=F, main="")
+##Estacionariedad y componente cíclico, no mucha tendencia
+
+plot(hsales, main="Sales of new one family houses, USA", ylab="Total sales", xlab="Year")
+## No estacionariedad, ni tendencia, posible componente cíclico
+seasonplot(hsales, s=12, year.labels=TRUE,main="Ventas de hogares americanos", ylab="Ventas totales", col=rainbow(20), year.labels.left=TRUE, pch=15)
+
+dec<-decompose (brciksq)
+# eliminando tendencia
+
+sinesta<- bricksq - dec$seasonal
+sintend <- bricksq - dec$trend
+
+plot(sinesta)
+plot(sintend)
+
+## Ejercicio: 3 ejemplos graficas detectar tendencia, estacionariedad y componente ciclico
+## Analizar a que se debe cada uno de os elementos encontrados
+## Pib% anual 1960 a 2015
