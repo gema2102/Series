@@ -1,0 +1,14 @@
+## Tarea: Analisis del crecimiento anual del PIB en Mexico 1960-2015
+
+crecimiento <- read.csv("C:/Users/Gema/Documents/Gema/Universidad/8vo semestre/Series de Tiempo/PIB porcentaje.csv")
+STcrecimiento <- ts(crecimiento, frequency=1, start=1960)
+start(STcrecimiento)
+end(STcrecimiento)
+plot(STcrecimiento, col="purple", main="Crecimiento anual del PIB en Mexico 1960-2015", xlab="Años", ylab="%")
+seasonplot(STcrecimiento, s=1, year.labels=TRUE, main="Crecimiento anual del PIB en Mexico 1960-2015", ylab="Años", col=rainbow(20), year.labels.left=TRUE, pch=20)
+STcrecimiento
+
+## Crecimiento anual del PIB en Mexico 2000-2015
+
+analisis <- window(STcrecimiento, start=2000, end=2015)
+plot(analisis, col="blue", main="Crecimiento anual del PIB en Mexico 2000-2015", ylab="%", xlab="Años")
