@@ -1,0 +1,42 @@
+## Cuando usar modelo aditivo a multiplicativo?
+##El modelo aditivo s eutiliza cuando la magnitud de las fluctuaciones estaciones de la serie no varía al hacer la tendenica
+
+##El modelo multiplicativo
+
+##Estos modelos son apropiados cuando la magnitud de las fluctuaciones estacionales de la serie crece y decrece proporcionalmente con los crecimientos y decrecimientos de la tendencia, respectivamente.
+
+##Hay dos modelos que podemos usar para descomponer la ST
+  ##1) Modelo aditivo
+  ##2) Modelo multiplicativp
+
+##Para descomponer una serie en un modelo aditivo
+
+tdesocadi <- decompose(tdesoc) #esto es para descomponer la serie de tiempo
+
+#Ahora para desocmponer una ST en un modelo multiplicativo
+
+desocupacion <- data.frame(read.csv("C:\\Users\\SALA-D30\\Documents\\Desocupacion.csv"))
+desot <- ts (desocupacion, frequency=4, start=2005)
+dectsd <- decompose(desot)
+dectsdmul <- decompose (desot, type="mult")
+plot(desot)
+lines(eeadj, col="blue")
+
+## Se grafican los dos modelos
+
+plot(dectsd)
+plot(dectsdmul)
+
+
+##Desestacionalizar una serie
+## Se desestacionaliza una serie de tiempo por diferentes razones, entre las que destacan:
+  # 1) Desestacionalizar para poder predecir nuestros datps con mayor precision y sin contar con factores externos al comportamiento de nuestros datos
+##Dos elementos que permiten desestacionalizar una serie
+
+install.packages("fpp")
+require (fpp)
+eeadj <- seasadj(dectsd)
+eeadj
+plot(eeadj)
+sinesta <- desot - dectsd$seasonal
+sinesta
