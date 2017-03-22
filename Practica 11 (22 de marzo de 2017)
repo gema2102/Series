@@ -1,0 +1,39 @@
+CPIB <- data.frame(read.csv("C:\\Users\\SALA-D30\\Documents\\crecimiento PIB.csv"))
+STCPIB <- ts (CPIB, frequency = 1, start = 1960)
+start (STCPIB)
+end (STCPIB)
+acf (STCPIB)
+
+## Tarea: Buscar una ST de Mexico en donde el correlograma determine que tiene ruido blanco 
+## y otras ST donde muestre el correlograma exponga que la ST tiene caminata aleatoria
+
+#############################################################################################################
+
+## MODELOS LINEALES PARA PRONOSTICAR
+
+    ## METODO INGENUO
+
+    ## Son la aplicacion de pronosticos lineales como el ingenuo, ingenuo estacional y el de deriva
+    ## El pronostico ingenuo esta basado en la ultima observacion que arroja la serie de tiempo. Es decir, este pronostico asume que 
+    ## la observacion mas importante es la ultima
+    ## Funcion en R: naive(serie, h=numero pronsoticos)
+
+    install.packages ("forecast")
+    require (forecast)
+    naive (STCPIB, h = 1)
+    
+    ## METODO PROMEDIO
+    
+    ## Este metodo le da el mismo peso a todos los datos u observaciones, es decir, se asume con este metodo que,
+    ## todas las observaciones tienen la misma importancia por lo que el pronostico es un promedio de todas las observaciones
+    ## Funcion en R: meanf(serie, h=numero de pronosticos)
+    meanf(STCPIB, h = 1)
+    plot (meanf(STCPIB, h = 1))
+    
+    ## METODO INGENUO ESTACIONAL
+    
+    ## Este metodo se utiliza en series de tiempo con alta estacionalidad.
+    ## Esre pronostico consiste en darle el mayor peso o la mayor ponderacion al dato del mismo periodo en el año anterior,
+    ## por ejemplo: Trimestre 2 del 2005 es igual al trimestre 2 del 20016
+    ## Funcion en R: snaive(serie, h=numero de pronosticos)
+    snaive (STCPIB, h = 1)
