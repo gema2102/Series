@@ -1,0 +1,23 @@
+desocupacion <- read.csv ("C:\\Users\\SALA-D30\\Documents\\Desocupacion.csv")
+STdesocupacion <- ts(desocupacion)
+
+## metodo de la deriva
+## Este metodo consiste en que el pronostico puede incrementar o reducirse dependiendo del promedio de los cambio historicos de la ST
+## Codigo en R
+install.packages("forecast")
+require(forecast)
+rwf(desocupacion, h = 4, drift = TRUE)
+
+desocupacionmod1 <- meanf(desocupacion, h=12) ## metodo del promedio
+desocupacionmod2 <- naive(desocupacion, h=4)
+desocupacionmod3 <- snaive(desocupacion, h=4)
+desocupacionmod4 <- rwf(desocupcion, h=4, drift=T)
+
+x11()
+plot (desocupacionmod1, main="Pronostico de desocupacion trimestral")
+lines(desocupacionmod2$residuals, col="blue")
+lines(desocupacionmod3$residuals, col="pink")
+lines(desocupacionmod4$residuals, col="green")
+legend("topleft", lty=1, col=c("blue","pink","green"), legend=c("media", "ingenuo", "ingenuo estacional", "deriva"))
+
+names (desocupacionmod2)
