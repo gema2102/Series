@@ -1,0 +1,30 @@
+## CAMINATA ALEATORIA
+
+##UDIS
+UDIS <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\UDIS.csv")
+STUDIS <- ts(UDIS, frequency=365)
+acf(STUDIS)
+
+##Peso-Dolar
+dolar <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Peso_Dolar.csv")
+STdolar <- ts(dolar, frequency=365)
+acf(STdolar)
+
+## America Movil
+AMX <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\America_Movil.csv")
+STAMX <- ts(AMX, frequency=365)
+acf(STAMX)
+
+## RUIDO BLANCO
+
+## Rendimiento Cemex 
+Rendimiento_Cemex <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Rendimiento_Cemex.csv")
+STRendimiento_Cemex <- ts(Rendimiento_Cemex, frequency=365)
+acf(STRendimiento_Cemex)
+
+
+## Rendimiento America Movil
+Rendimiento_AMX <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Rendimiento_AMX.csv")
+STRendimiento_AMX <- ts(Rendimiento_AMX, frequency=365)
+acf(STRendimiento_AMX)
+
