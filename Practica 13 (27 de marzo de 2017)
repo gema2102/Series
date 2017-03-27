@@ -1,0 +1,20 @@
+## PRACTICA 13 -> METODO SUAVIZADO EXPONENCIAL SIMPLE (SES)
+
+asalariados <- t(data.frame(read.csv ("C:\\Users\\SALA-D30\\Documents\\Asalariado.csv", header = T)[7,2:49])) #CORCHETE: Primera entrada es el renglon, segunda entrada son las columnas
+asalariados <- as.numeric(asalariados)
+asalariadosST <- ts(asalariados, start = 2005, frequency = 4)
+
+## Suavizado exponencial en R
+require (forecast)
+mod1 <- ses(asalariados, alpha = 0.1, initial = "simple", h = 8)
+mod2 <- ses(asalariados, alpha = 0.3, initial = "simple", h = 8)
+mod3 <- ses(asalariados, alpha = 0.95, initial = "simple", h = 8)
+x11()
+plot (mod1, ylab="Asalariados", xlab="Años", main="Asalariados", type="o")
+lines(mod1$fitted, col="brown", type="o") ## fitted=valores ajustados
+lines(mod2$fitted, col="red", type="o")
+lines(mod3$fitted, col="green", type="o")
+lines(mod1$mean, col="brown", type="o") ## mean=pronosticos
+lines(mod2$mean, col="red", type="o")
+lines(mod3$mean, col="green", type="o")
+legend("topleft", lty=1, col=c(1,"blue","red","green"), c("datos", expression(alpha==0.1), expression(alpha==0.3), expression(alpha==1)), pch=64)
