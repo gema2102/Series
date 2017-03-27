@@ -1,4 +1,4 @@
-## PRACTICA 13 -> METODO SUAVIZADO EXPONENCIAL SIMPLE (SES)
+## PRACTICA 12 -> METODO SUAVIZADO EXPONENCIAL SIMPLE (SES)
 
 asalariados <- t(data.frame(read.csv ("C:\\Users\\SALA-D30\\Documents\\Asalariado.csv", header = T)[7,2:49])) #CORCHETE: Primera entrada es el renglon, segunda entrada son las columnas
 asalariados <- as.numeric(asalariados)
