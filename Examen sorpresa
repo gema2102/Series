@@ -1,0 +1,90 @@
+## Descargar las acciones de TV AZTECA diario
+
+azteca <- read.csv("C:\\Users\\SALA-D30\\Documents\\acciones TV_AZTECA.csv")
+aztecaST <- ts(azteca, start=2016, frequency=365)
+plot (aztecaST, ylab="Precio", xlab="Días", main="Serie de tiempo de TZ AZTECA")
+
+## Ajustar los 4 modeos de suavizado exponencial simple (alpha= 0.2 , 0.4, 0.6, 0.8)
+
+install.packages("forecast")
+require (forecast)
+
+modelo1 <- ses(aztecaST, alpha = 0.2, initial = "simple", h = 8)
+modelo2 <- ses(aztecaST, alpha = 0.4, initial = "simple", h = 8)
+modelo3 <- ses(aztecaST, alpha = 0.6, initial = "simple", h = 8)
+modelo4 <- ses(aztecaST, alpha = 0.8, initial = "simple", h = 8)
+
+##Graficarlo en una sola gráfica
+
+plot (modelo1, ylab="Precio", xlab="Días", main="TV AZTECA", type="b")
+lines(fitted(modelo1), col="blue", type="b")
+lines(fitted(modelo2), col="red", type="b")
+lines(fitted(modelo3), col="green", type="b")
+lines(fitted(modelo4), col="pink", type="b")
+legend("topleft", lty=1, col=c("blue","red","green","pink"), c(expression(alpha==0.2), expression(alpha==0.4), expression(alpha==0.6), expression(alpha==0.8)), pch=64)
+
+## Modelo 1
+
+mod1 <- aztecaST - modelo1$fitted
+mae1 <- mean(abs(mod1)) ## MAE
+mae1
+rms1 <- sqrt(mean(mod1^2)) ## RMS
+rms1
+evaluar_modelo1 <- accuracy(modelo1)
+
+## Modelo 2
+
+mod2 <- aztecaST - modelo2$fitted
+mae2 <- mean(abs(mod2)) ## MAE
+mae2
+rms2 <- sqrt(mean(mod2^2)) ## RMS
+rms2
+evaluar_modelo2 <- accuracy(modelo2)
+
+## Modelo 3
+
+mod3 <- aztecaST - modelo3$fitted
+mae3 <- mean(abs(mod3)) ## MAE
+mae3
+rms3 <- sqrt(mean(mod3^2)) ## RMS
+rms3
+evaluar_modelo3 <- accuracy(modelo3)
+
+## Modelo 4
+
+mod4 <- aztecaST - modelo4$fitted
+mae4 <- mean(abs(mod4)) ## MAE
+mae4
+rms4 <- sqrt(mean(mod4^2)) ## RMS
+rms4
+evaluar_modelo4 <- accuracy(modelo4)
+
+## Se va a elegir el modelo 4 porque el MAE de ese modelo es el que 
+## más se acerca a cero y por que graficamente se acopla más 
+
+vector <- c(mae1, mae2, mae3, mae4)
+vector
+vector2 <- c(rms1, rms2, rms3, rms4)
+vector2
+
+## Crear un vector que compare MAE y RMS
+
+minimoMAE<-min(vector)
+minimoRMS<-min(vector2)
+
+MAE<-ifelse(minimoMAE==mae1,  "Modelo 1", 
+             ifelse(minimoMAE==mae2, "Modelo 2",
+                    ifelse(minimoMAE==mae3, "Modelo 3",
+                           ifelse(minimoMAE==mae4, "Modelo 4",0))))
+MAE
+
+RMS<-ifelse(minimoRMS==rms1,  "Modelo 1", 
+              ifelse(minimoRMS==rms2, "Modelo 2",
+                     ifelse(minimoRMS==rms3, "Modelo 3",
+                            ifelse(minimoRMS==rms4, "Modelo 4",0))))
+RMS
+
+## Identificar tendencia, estacionariedad y ciclos en la serie de tiempo
+## La grafica de los precios de la accion de TV AZTECA en el año 2016 muestra una tendencia hacia la alza.
+## No se puede apreciar la existencia de estacionariedad en la serie de tiempo asi como de algun ciclo
+## Sólo se observan dos posibles ciclos en el mes de abril a mayo y de mayo a junio del 2016
