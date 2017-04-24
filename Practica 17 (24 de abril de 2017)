@@ -1,0 +1,21 @@
+## Generar una serie de tiempo estacional (minimo 15 datos) y aplicar el pronostico en los dos metodos
+## de Holt-Winters y ademas aplicar el pronostico de tendencia exponencial, graficar y comparar
+
+UDIS <- read.csv("C:\\Users\\SALA-D30\\Documents\\UDIS.csv")
+UDISST <- ts(UDIS, start = 2017, frequency = 365)
+install.packages("fpp")
+require(fpp)
+Modelo_Ad <- hw(UDISST, seasonal = "additive")
+Modelo_Ad
+Modelo_Mult <- hw(UDISST, seasonal="multiplicative")
+Modelo_Mult
+
+TendExp <- holt(UDISST,  initial = "simple", exponential = T, h=8)
+TendExp
+
+plot(Modelo_Ad, main = "UDIS 2005-2017", xlab="Tiempo", ylab="Precio", col= "pink", type="l")
+lines(UDISST)
+lines(Modelo_Mult$mean, col= "purple")
+lines(TendExp$mean, col= "green")
+legend("topleft",lty = 1, col=c("pink","purple","green"),legend = c("Modelo Aditivo","Modelo Multiplicativo","Tendencia Exponencial"))
+
