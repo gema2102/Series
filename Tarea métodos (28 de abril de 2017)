@@ -1,0 +1,200 @@
+###################################### PESO-DOLAR ################################################
+
+dolar <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Ejercicios\\Peso-dolar.csv")
+dolarST <- ts(dolar, start =c(2016,196), frequency = 252)
+
+install.packages("forecast")
+require (forecast) 
+
+ingenuo_dolar <- naive(dolarST, h=8) ## Metodo ingenuo
+ingenuo_dolar
+accuracy(ingenuo_dolar)
+
+promedio_dolar <- meanf(dolarST, h=8) ## Metodo promedio
+promedio_dolar
+accuracy(promedio_dolar)
+
+estacional_dolar <- snaive(dolarST, h=8) ## Metodo ingenuo estacional
+estacional_dolar
+accuracy(estacional_dolar)
+
+deriva_dolar <- rwf(dolarST, h=8) ## Metodo de deriva
+deriva_dolar
+accuracy(deriva_dolar)
+
+holt_lineal_dolar <- holt(dolarST, initial = "simple", h=8) ## Holt lineal
+holt_lineal_dolar
+accuracy(holt_lineal_dolar)
+
+holt_exp_dolar <- holt(dolarST, initial = "simple", exponential = T, h=8) ## Holt exponencial
+holt_exp_dolar
+accuracy(holt_exp_dolar)
+
+amort_adit_dolar <- holt(dolarST, damped = T, h=8) ## Amortiguado aditivo
+amort_adit_dolar
+accuracy(amort_adit_dolar)
+
+amort_mult_dolar <- holt(dolarST, damped = T, exponential = T, h=8) ## Amortiguado multiplicativo
+amort_mult_dolar
+accuracy(amort_mult_dolar)
+
+winter_adit_dolar <- hw(dolarST, seasonal = "additive") ## Winter aditivo
+winter_adit_dolar
+accuracy(winter_adit_dolar)
+
+winter_mult__dolar <- hw(dolarST, seasonal="multiplicative") ## winter multiplicativo
+winter_mult__dolar
+accuracy(winter_mult__dolar)
+
+## Comparando los RMSE y los MAE de cada uno de los métodos, los modelos
+## que mejor se ajustan porque estos datos son muy cercanos a 0 son:
+## 1) Simple: Método de la deriva
+## 2) Holt: Método exponencial
+## 3) Amortiguado: Método aditivo
+## 4) Winter: Método aditivo
+
+plot (dolarST, main = "Peso-Dolar Oct16-Mar17", xlab="Tiempo", ylab="Precio", col= "red", type="l")
+lines (deriva_dolar$fitted, col="pink", type = "l")
+lines (holt_exp_dolar$fitted, col="blue", type = "l")
+lines (amort_adit_dolar$fitted, col="green", type = "l")
+lines (winter_adit_dolar$fitted, col="purple", type ="l")
+legend("bottomright", lty=1, col=c("red","pink","blue","green","purple"), c("Datos", "Deriva", "Holt exponencial", "Amortiguado aditivo", "Winter aditivo"), pch=64)
+
+plot (dolarST, main = "Peso-Dolar Oct16-Mar17", xlab="Tiempo", ylab="Precio", col= "red", type="l")
+lines(deriva_dolar$mean, col="orange", type="o") 
+lines(holt_exp_dolar$mean, col="brown", type="o")
+lines(amort_adit_dolar$mean, col="yellow", type="o")
+lines (winter_adit_dolar$mean, col="gray", type ="o")
+legend("bottomright", lty=1, col=c("red","orange","brown","yellow","gray"), c("Datos", "Deriva", "Holt exponencial", "Amortiguado aditivo", "Winter aditivo"), pch=64)
+
+################################## BIMBO ###########################################################
+
+bimbo <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Ejercicios\\Bimbo.csv")
+bimboST <- ts(bimbo, start = c(2016,1), frequency = 252)
+
+ingenuo_bimbo <- naive(bimboST, h=8) ## Metodo ingenuo
+ingenuo_bimbo
+accuracy(ingenuo_bimbo)
+
+promedio_bimbo <- meanf(bimboST, h=8) ## Metodo promedio
+promedio_bimbo
+accuracy(promedio_bimbo)
+
+estacional_bimbo <- snaive(bimboST, h=8) ## Metodo ingenuo estacional
+estacional_bimbo
+accuracy(estacional_bimbo)
+
+deriva_bimbo <- rwf(bimboST, h=8) ## Metodo de deriva
+deriva_bimbo
+accuracy(deriva_bimbo)
+
+holt_lineal_bimbo <- holt(bimboST, initial = "simple", h=8) ## Holt lineal
+holt_lineal_bimbo
+accuracy(holt_lineal_bimbo)
+
+holt_exp_bimbo <- holt(bimboST, initial = "simple", exponential = T, h=8) ## Holt exponencial
+holt_exp_bimbo
+accuracy(holt_exp_bimbo)
+
+amort_adit_bimbo <- holt(bimboST, damped = T, h=8) ## Amortiguado aditivo
+amort_adit_bimbo
+accuracy(amort_adit_bimbo)
+
+amort_mult_bimbo <- holt(bimboST, damped = T, exponential = T, h=8) ## Amortiguado multiplicativo
+amort_mult_bimbo
+accuracy(amort_mult_bimbo)
+
+winter_adit_bimbo <- hw(bimboST, seasonal = "additive") ## Winter aditivo
+winter_adit_bimbo
+accuracy(winter_adit_bimbo)
+
+winter_mult__bimbo <- hw(bimboST, seasonal="multiplicative") ## winter multiplicativo
+winter_mult__bimbo
+accuracy(winter_mult__bimbo)
+
+## Comparando los RMSE y los MAE de cada uno de los métodos, los modelos
+## que mejor se ajustan porque estos datos son muy cercanos a 0 son:
+## 1) Simple: Método de Deriva
+## 2) Holt: Método lineal
+## 3) Amortiguado: Método Aditivo
+## 4) Winter: Método Aditivo
+
+plot (bimboST, main = "Bimbo 2016", xlab="Tiempo", ylab="Precio", col= "red", type="l")
+lines (deriva_bimbo$fitted, col="pink", type = "l")
+lines (holt_lineal_bimbo$fitted, col="blue", type = "l")
+lines (amort_adit_bimbo$fitted, col="green", type = "l")
+lines (winter_adit_bimbo$fitted, col="purple", type ="l")
+legend("bottomright", lty=1, col=c("red","pink","blue","green","purple"), c("datos", "Deriva", "Holt Lineal", "Amortiguado Aditivo", "Winter Aditivo"), pch=64)
+
+plot (bimboST, main = "Bimbo 2016", xlab="Tiempo", ylab="Precio", col= "red", type="l")
+lines(deriva_bimbo$mean, col="orange", type="o") 
+lines(holt_lineal_bimbo$mean, col="brown", type="o")
+lines(amort_adit_bimbo$mean, col="yellow", type="o")
+lines (winter_adit_bimbo$mean, col="gray", type ="o")
+legend("bottomright", lty=1, col=c("red","orange","brown","yellow","gray"), c("datos", "Deriva", "Holt Lineal", "Amortiguado Aditivo", "Winter Aditivo"), pch=64)
+
+################################## REMESAS ###########################################################
+
+remesas <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Ejercicios\\Remesas.csv")
+remesasST <- ts(remesas, start = c(2000,1), frequency = 12)
+
+ingenuo_remesas <- naive(remesasST, h=8) ## Metodo ingenuo
+ingenuo_remesas
+accuracy(ingenuo_remesas)
+
+promedio_remesas <- meanf(remesasST, h=8) ## Metodo promedio
+promedio_remesas
+accuracy(promedio_remesas)
+
+estacional_remesas <- snaive(remesasST, h=8) ## Metodo ingenuo estacional
+estacional_remesas
+accuracy(estacional_remesas)
+
+deriva_remesas <- rwf(remesasST, h=8) ## Metodo de deriva
+deriva_remesas
+accuracy(deriva_remesas)
+
+holt_lineal_remesas <- holt(remesasST, initial = "simple", h=8) ## Holt lineal
+holt_lineal_remesas
+accuracy(holt_lineal_remesas)
+
+holt_exp_remesas <- holt(remesasST, initial = "simple", exponential = T, h=8) ## Holt exponencial
+holt_exp_remesas
+accuracy(holt_exp_remesas)
+
+amort_adit_remesas <- holt(remesasST, damped = T, h=8) ## Amortiguado aditivo
+amort_adit_remesas
+accuracy(amort_adit_remesas)
+
+amort_mult_remesas <- holt(remesasST, damped = T, exponential = T, h=8) ## Amortiguado multiplicativo
+amort_mult_remesas
+accuracy(amort_mult_remesas)
+
+winter_adit_remesas <- hw(remesasST, seasonal = "additive") ## Winter aditivo
+winter_adit_remesas
+accuracy(winter_adit_remesas)
+
+winter_mult__remesas <- hw(remesasST, seasonal="multiplicative") ## winter multiplicativo
+winter_mult__remesas
+accuracy(winter_mult__remesas)
+
+## Comparando los RMSE y los MAE de cada uno de los métodos, los modelos
+## que mejor se ajustan porque estos datos son muy cercanos a 0 son:
+## 1) Simple: Método de Deriva
+## 2) Holt: Método Lineal
+## 3) Amortiguado: Método Aditivo
+## 4) Winter: Método Multiplicativo
+
+plot (remesasST, main = "Remesas 2000-2017", xlab="Tiempo", ylab="Millones de dolares", col= "red", type="l")
+lines (deriva_remesas$fitted, col="pink", type = "l")
+lines (holt_lineal_remesas$fitted, col="blue", type = "l")
+lines (amort_adit_remesas$fitted, col="green", type = "l")
+lines (winter_mult_remesas$fitted, col="purple", type ="l")
+legend("bottomright", lty=1, col=c("red","pink","blue","green","purple"), c("Datos", "Deriva", "Holt Lineal", "Amortiguado Aditivo", "Winter Multiplicativo"), pch=64)
+
+plot (remesasST, main = "Remesas 2000-2017", xlab="Tiempo", ylab="Millones de dolares", col= "red", type="l")
+lines(deriva_remesas$mean, col="orange", type="o") 
+lines(holt_lineal_remesas$mean, col="brown", type="o")
+lines(amort_adit_remesas$mean, col="yellow", type="o")
+lines (winter_mult_remesas$mean, col="gray", type ="o")
+legend("bottomright", lty=1, col=c("red","pink","blue","green","purple"), c("Datos", "Deriva", "Holt Lineal", "Amortiguado Aditivo", "Winter Multiplicativo"), pch=64)
