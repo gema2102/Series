@@ -1,0 +1,9 @@
+ICA <- read.csv("C:\\Users\\SALA-D30\\Documents\\ICA 2016-2017.csv")
+ICAST <- ts(ICA, start =c(2016,1), frequency = 252)
+acf(ICAST)
+plot(ICAST)
+
+serie <- sample (300:900, 252)
+serieST <- ts(serie, frequency = 252, start=2016)
+acf(serieST)
+plot(serieST)
