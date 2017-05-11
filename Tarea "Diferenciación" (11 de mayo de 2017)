@@ -1,0 +1,31 @@
+serie <- sample (300:900, 252)
+serieST <- ts(serie, frequency = 252, start=2016)
+acf(serieST)
+plot(serieST)
+
+ICA <- read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\ICA 2016-2017.csv")
+ICAST <- ts(ICA, start =c(2016,1), frequency = 252)
+acf(ICAST)
+plot
+
+## Con la funcion "diff" se obtiene la diferenciacion de los datos
+diferenciacion <- diff(ICAST)
+diferenciacion
+
+## La diferenciacion se obtiene mediante un "for"
+manual <- rep(0,337)
+
+for(i in 1:337)
+{
+  manual[i] <- ICA[i+1,1] - ICA[i,1]
+}
+manual
+
+secuencia <- seq(1,337, by=1)
+informe_manual <- cbind(secuencia, manual)
+informe_manual
+
+## Se hace la comparación para ver si la diferenciación 
+## con los dos métodos está bien
+comparacion <- cbind( diferenciacion, manual)
+comparacion
