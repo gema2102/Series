@@ -1,0 +1,90 @@
+bimbo <- read.csv("C:\\Users\\SALA-D30\\Documents\\Bimbo.csv")
+bimboST <- ts (bimbo[,2], frequency = 252, start=2016 )
+
+install.packages("foreign")
+require(foreign)
+
+install.packages("fpp")
+require(fpp)
+
+## Revisar si muestra serie es estacionaria, se aplica la prueba de raiz unitaria a traves de 
+## la funcion adf.test y esperamos que el p-value sea menor a 0.05
+adf.test(bimboST)
+
+dbimbo <- diff(bimboST) ## aplicamos la primera diferenciacion con la funcion diff 
+## debido a que la serie original no es estacionaria
+
+adf.test(dbimbo)
+## que nuestra serie en su primera diferenciacion se convierte en estacionaria
+
+acf(dbimbo) ## en este paso determinamos el numero de "q" que se asocia con los modelos 
+## de promedios moviles
+
+## Para determinar el valor de "p" que se relaciona con los modelos autorregresivos se 
+## utiliza la funcion pacf()
+pacf(dbimbo) ## segun el correlograma de pacf el valor de p es 1
+
+## por lo que se propone un modelo ARIMA(1,1,2)
+
+modbimbo <- Arima (bimboST, order=c(1,1,2))
+modbimbo
+
+modbimbo1 <- Arima (bimboST, order=c(2,1,2))
+modbimbo1
+## entre estos dos modelos habria que revisar el valor AICc y el menor valor de AICc 
+## seria el mejor modelo con el criterio AIKAIKE 
+
+modresiduo <- residuals (modbimbo)
+Box.test(modresiduo, lag=12, type="Ljung-Box") ## pvalue grande sugiere que los
+## residuales tienen ruido blanco
+
+mod1 <- forecast(modbimbo, h=12)
+x11()
+plot (forecast(modbimbo, h=12), include=18)
+mod1
+summary(mod1)
+auto.arima(bimboST)
+
+mod1residuo <- residuals(modbimbo1)
+Box.test(mod1residuo, lag=12, type="Ljung-Box")
+mod2 <- forecast(modbimbo1, h=12)
+x11()
+plot (forecast(modbimbo1, h=12), include=25)
+modbimbo1
+
+############################CEMEX##############################################################
+
+cemex <- read.csv("C:\\Users\\SALA-D30\\Documents\\Cemex.csv")
+cemexST <- ts (cemex[,2], frequency = 252, start=2016 )
+
+adf.test(cemexST)
+
+difcemex <- diff(cemexST)
+adf.test(difcemex) ##d =1
+
+acf(difcemex) ## q=2
+pacf(difcemex) ## p=2
+
+modcemex <- Arima (cemexST, order=c(2,1,2))
+modcemex
+
+modcemex1 <- Arima (cemexST, order=c(1,1,2))
+modcemex1
+
+modresiduocemex <- residuals (modcemex)
+Box.test(modresiduocemex, lag=12, type="Ljung-Box") 
+
+mod <- forecast(modcemex, h=12)
+x11()
+plot (forecast(modcemex, h=12), include=18)
+mod
+summary(mod)
+auto.arima(cemexST)
+
+mod1residuocemex <- residuals(modcemex1)
+Box.test(mod1residuocemex, lag=12, type="Ljung-Box")
+mod2cemex <- forecast(modcemex1, h=12)
+x11()
+plot (forecast(modcemex1, h=12), include=25)
+modcemex1
+
